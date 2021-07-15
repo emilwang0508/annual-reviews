@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <script src="https://lib.baomitu.com/systemjs/6.10.2/system.min.js"></script>
+    <script src="./next.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <div id="app2"></div>
+    <script>
+        requireJs.config({
+            paths: {
+                lodash: 'https://lib.baomitu.com/lodash.js/4.17.21/lodash.min.js'
+            }
+        })
+        require(['lodash', 'a'], function(_, a){
+            console.log('require run')
+            document.querySelector('#app').innerHTML = _.random(5)
+            document.querySelector('#app2').innerHTML = a.str();
+        })
+    </script>
+</body>
+
+</html>

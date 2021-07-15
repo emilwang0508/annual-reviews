@@ -1,0 +1,1 @@
+// 1. 手写Promise.all(), Promise.resolve(), Promise.reject(), Promise.race()
