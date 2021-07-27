@@ -13,10 +13,11 @@ function subStr(str) {
             curLen = 1
         }
         if (preLen >= curLen) {
-            
             count++
         }
+
     }
-    return count;
+    console.log(res)
+    return res;
 }
 export default subStr
