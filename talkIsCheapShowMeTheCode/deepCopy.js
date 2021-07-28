@@ -5,7 +5,7 @@ export default deepCopy = (obj) => {
         let result = obj.constructor === Array ? [] : {}
 
         for (let i in obj) {
-            result[i] = typeof i === 'object' ? deepCopy(result[i]) : obj[i]
+            result[i] = typeof i === 'object' ? deepCopy(obj[i]) : obj[i]
         }
     } else {
         let result = obj
