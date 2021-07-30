@@ -326,3 +326,138 @@ const scheduler = new Scheduler()
 scheduler.add()
 scheduler.start()
 ```
+
+## 图片懒加载
+
+```js
+function lazyload() {
+    window.addEventListener('scroll', function () {
+        const imgs = [...document.querySelectorAll('img')];
+        const len = imgs.length;
+
+        const callback = entries => {
+            entries.forEach(ele => {
+                if (ele.isIntersecting) {
+                    const data_src = ele.target.getAttribute('data-src')
+
+                    ele.target.setAttribute('src', data_src)
+                    observe.unoberse(ele.target)
+                }
+            })
+        }
+
+        const observe = new IntersectionObserver(callback)
+
+        imgs.forEach( img => {
+            observe.observe(img)
+        })
+    })
+}
+```
+
+## 滚动加载
+```js
+window.addEventListener('scroll', function(){
+    const clientHeight = document.documentElement.clientHeight,
+          scrollTop = document.documentElement.clientHeigt,
+          scrollHeight = document.documentElement.scrollHeight
+
+    if (clientHeight + scrollTop >= scrollHeight) {
+
+    }
+}, false)
+```
+
+## 渲染大量数据
+```js
+const load = () => {
+    const total = 1000000,
+          once = 20,
+          loopCount = Math.ceil(total / once)
+
+    let count = 0
+
+    const ul = document.querySelector('ul#ul')
+
+    function add() {
+        const fragement = document.createDocumentFragment()
+
+        for (let i = 0; i < once; i++) {
+            const li = document.createElement('li')
+            li.innerText = '111'
+            fragment.appenChild(li)
+        }
+
+        ul.appendChild(fragment)
+        count++
+        loop()
+    }
+
+    return function loop() {
+        if (count < loopCount) {
+            window.requestAnimationFrame(add)
+        }
+    }
+
+}
+setTimeout(load, 0)
+```
+
+## 打印出当前网页使用了多少种HTML元素
+```js
+const fn = () => {
+    return [...new Set([...document.querySelectorAll('*')].map( el => el.tagName))].length
+}
+```
+
+## 字符串解析问题
+
+```js
+var a = {
+	b: 123,
+	c: '456',
+	e: '789',
+}
+var str=`a{a.b}aa{a.c}aa {a.d}aaaa`;
+// => 'a123aa456aa {a.d}aaaa'
+
+const fn = (str, obj) => {
+    let res = '',
+        flag = false, // 是否匹配到{
+        start = 0
+    
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === '{') {
+            flag = true
+            start = i + 1
+            continue;
+        }
+        if (!flag) res += str[i]
+        else {
+            if (str[i] === '}') {
+                flag = false
+                res += match(str.slice(start, i), obj)
+            }
+        }
+
+    }
+    
+    return res
+} 
+
+const match = (str, obj) => {
+    let keys = str.split('.')slice(1)
+    let index = 0
+    let res = ''
+    while (index < keys.length) {
+        const key = keys[index]
+        if (!obj[key]) {
+            return `{${str}}`
+        } else {
+            res = obj[key]
+        }
+        index++
+    }
+    return res
+}
+```
